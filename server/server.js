@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Local Imports
+const {ObjectID} = require('mongodb');
 const {mongoose} = require('./db/mongoose.js');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
@@ -31,6 +32,24 @@ app.get('/todos', (req, res) => {
     res.send({todos});
   }, (err) => {
     res.status(400).send(err);
+  });
+});
+
+// GET /todos/:id
+app.get('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  // valid id using isValid
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+  // quering database
+  Todo.findById(id).then((todo) => {
+    if(!todo) {
+      res.status(404).send();
+    }
+    res.status(200).send({todo});
+  }).catch((err) => {
+    res.status(400).send();
   });
 });
 
