@@ -4,10 +4,14 @@
   "description": "This is my first API service project",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
-  "author": "me",
+  "engines": {
+    "node": "9.8.0"
+  },
+  "author": "Ajay",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
